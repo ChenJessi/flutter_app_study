@@ -1,7 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runZoned(() {
+    // 全局错误信息收集
+    ErrorWidget.builder = (FlutterErrorDetails details){
+      Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.empty);
+      return Container(
+        color: Colors.transparent,
+      );
+    };
+    FlutterError.onError = (FlutterErrorDetails details) async {
+      FlutterError.dumpErrorToConsole(details);
+      Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.empty);
+    };
+    runApp(const MyApp());
+  }, onError: (Object obj, StackTrace stack) {
+    debugPrint('onError: $obj');
+    debugPrint('onError: $stack');
+  });
 }
 
 class MyApp extends StatelessWidget {
