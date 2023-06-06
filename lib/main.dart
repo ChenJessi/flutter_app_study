@@ -1,26 +1,48 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runZoned(() {
-    // 全局错误信息收集
-    ErrorWidget.builder = (FlutterErrorDetails details){
-      Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.empty);
+
+  // 全局错误信息收集
+  runZonedGuarded(() {
+    ErrorWidget.builder = (FlutterErrorDetails details) {
+      Zone.current.handleUncaughtError(details.exception, details.stack!);
+      ///此处仅为展示，正规的实现方式参考 _defaultErrorWidgetBuilder 通过自定义 RenderErrorBox 实现
       return Container(
         color: Colors.transparent,
       );
     };
-    FlutterError.onError = (FlutterErrorDetails details) async {
-      FlutterError.dumpErrorToConsole(details);
-      Zone.current.handleUncaughtError(details.exception, details.stack??StackTrace.empty);
-    };
     runApp(const MyApp());
-  }, onError: (Object obj, StackTrace stack) {
-    debugPrint('onError: $obj');
+    ///屏幕刷新率和显示率不一致时的优化，必须挪动到 runApp 之后
+    GestureBinding.instance.resamplingEnabled = true;
+  },(error, stack) {
+    debugPrint('onError: $error');
     debugPrint('onError: $stack');
   });
+
+
+
 }
+//
+// class FlutterReduxApp extends StatelessWidget {
+//   const FlutterReduxApp({super.key});
+//   //final store = new Store<>
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       title: 'Flutter Redux Demo',
+//       home: MyApp(),
+//     );
+//   }
+//}
+
+
+
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
