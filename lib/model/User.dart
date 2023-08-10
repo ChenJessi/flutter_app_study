@@ -8,4 +8,6 @@ class User{
   String? login;
   String? avatar_url;
   String? name;
+
+  User.empty();
 }
