@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_study/common/localizations/app_localizations_delegate.dart';
+import 'package:flutter_app_study/page/debug/debug_label.dart';
+import 'package:flutter_app_study/page/home/home_page.dart';
+import 'package:flutter_app_study/page/welcome_page.dart';
 import 'package:flutter_app_study/redux/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -87,6 +90,17 @@ class _FlutterReduxAppState extends State<FlutterReduxApp>
           /// “/” 和 MaterialApp 的 home 参数对应的路由是一样的
           /// 这里的 name 调用，里面的 pageContainer 方法有一个 MediaQuery.of(context).copyWith(textScaleFactor: 1),
           /// 这里的 context 用的 WidgetBuilder 的 context
+
+          routes: {
+            WelComePage.sName: (context) {
+              DebugLabel.showDebugLabel(context);
+              return WelComePage();
+            } ,
+            HomePage.sName: (context) {
+              DebugLabel.showDebugLabel(context);
+              return HomePage();
+            },
+          }
 
         );
 

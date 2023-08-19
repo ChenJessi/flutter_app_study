@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+import 'app.dart';
+
 void main() {
 
   // 全局错误信息收集
@@ -14,7 +16,7 @@ void main() {
         color: Colors.transparent,
       );
     };
-    runApp(const MyApp());
+    runApp(FlutterReduxApp());
     ///屏幕刷新率和显示率不一致时的优化，必须挪动到 runApp 之后
     GestureBinding.instance.resamplingEnabled = true;
   },(error, stack) {
