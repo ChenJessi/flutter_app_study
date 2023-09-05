@@ -1,11 +1,9 @@
 
-
-
 import 'dart:ui';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:path_provider/path_provider.dart';
 
 class CommonUtils{
 
@@ -24,4 +22,24 @@ class CommonUtils{
       ),
     );
   }
+
+
+  /**
+   * 获取应用程序的存储目录
+   */
+  static getApplicationDocumentsPath() async {
+    Directory appDir;
+    if (Platform.isIOS) {
+      appDir = await getApplicationDocumentsDirectory();
+    } else {
+      appDir = await getApplicationSupportDirectory();
+    }
+    String appDocPath = "${appDir.path}/flutter_app_study";
+    Directory appPath = Directory(appDocPath);
+
+    await appPath.create(recursive: true);
+    return appPath.path;
+  }
+
+
 }
