@@ -1,6 +1,8 @@
 import 'dart:collection';
 import 'package:dio/dio.dart';
+import 'package:flutter_app_study/common/net/interceptor/response_interceptors.dart';
 import 'package:flutter_app_study/common/net/interceptor/token_interceptor.dart';
+import 'interceptor/error_interceptor.dart';
 import 'interceptor/header_interceptors.dart';
 import 'interceptor/log_interceptor.dart';
 import 'result_data.dart';
@@ -20,8 +22,10 @@ class HttpManager {
     _dio.interceptors.add(_tokenInterceptor);
 
     _dio.interceptors.add(LogsInterceptor());
-  }
+    _dio.interceptors.add(ErrorInterceptors());
+    _dio.interceptors.add(ResponseInterceptors());
 
+  }
   /// 发起网络请求
   /// [url] 请求url
   /// [params] 请求参数
