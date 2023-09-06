@@ -1,6 +1,8 @@
 import 'dart:collection';
 import 'package:dio/dio.dart';
 import 'package:flutter_app_study/common/net/interceptor/token_interceptor.dart';
+import 'interceptor/header_interceptors.dart';
+import 'interceptor/log_interceptor.dart';
 import 'result_data.dart';
 import 'code.dart';
 
@@ -13,7 +15,11 @@ class HttpManager {
   final TokenInterceptor _tokenInterceptor = TokenInterceptor();
 
   HttpManager() {
+    _dio.interceptors.add(HeaderInterceptors());
+
     _dio.interceptors.add(_tokenInterceptor);
+
+    _dio.interceptors.add(LogsInterceptor());
   }
 
   /// 发起网络请求

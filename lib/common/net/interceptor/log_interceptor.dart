@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_app_study/common/config/config.dart';
 
 /// 日志拦截器
-class LogInterceptor extends InterceptorsWrapper{
+class LogsInterceptor extends InterceptorsWrapper{
     static List<Map?> sHttpResponses = [];
     static List<String?> sResponsesHttpUrl = [];
 
@@ -16,7 +16,7 @@ class LogInterceptor extends InterceptorsWrapper{
 
 
     @override
-    void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+    void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
         if(Config.DEBUG){
             print("请求url：${options.path}  ${options.method}");
             options.headers.forEach((key, value) { options.headers[key] = value ?? "";});
@@ -50,7 +50,7 @@ class LogInterceptor extends InterceptorsWrapper{
     }
 
     @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
+  void onResponse(Response response, ResponseInterceptorHandler handler) async {
     if(Config.DEBUG){
       print("返回参数：${response.data}");
     }
@@ -97,8 +97,21 @@ class LogInterceptor extends InterceptorsWrapper{
 
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    // TODO: implement onError
+  void onError(DioException err, ErrorInterceptorHandler handler) async {
+    if(Config.DEBUG){
+      print("请求异常：${err.message}");
+      print("请求异常信息：${err.response?.toString() ?? ""}");
+    }
+
+    try {
+      addLogic(sHttpErrorUrl, err.requestOptions.path.toString());
+      var data = <String, dynamic>{};
+      data["error"] = err.message;
+      addLogic(sHttpError, data);
+    } catch (e) {
+      print(e);
+    }
+
     super.onError(err, handler);
   }
 
