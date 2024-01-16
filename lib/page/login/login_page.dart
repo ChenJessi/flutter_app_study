@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app_study/widget/particles/particles_widget.dart';
 
 import '../../widget/animated_background.dart';
 
@@ -31,6 +32,18 @@ class _LoginPageState extends State<LoginPage> {
           child: Stack(
             children: <Widget>[
               Positioned.fill(child: AnimatedBackground()),
+              Positioned.fill(child: ParticleWidget(30)),
+              new Center(
+                // 防止overFlow的现象
+                child: SafeArea(
+                  // 同时弹出键盘不遮挡
+                  child: SingleChildScrollView(
+                    child: new Card(
+                        elevation: 5.0, //设置阴影
+                    ),
+                  ) ,
+                ),
+              )
             ],
           ),
         ),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app_study/common/localizations/app_localizations_delegate.dart';
 import 'package:flutter_app_study/page/debug/debug_label.dart';
 import 'package:flutter_app_study/page/home/home_page.dart';
+import 'package:flutter_app_study/page/login/login_page.dart';
 import 'package:flutter_app_study/page/welcome_page.dart';
 import 'package:flutter_app_study/redux/app_state.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -100,6 +101,10 @@ class _FlutterReduxAppState extends State<FlutterReduxApp>
               DebugLabel.showDebugLabel(context);
               return HomePage();
             },
+            LoginPage.sName: (context){
+              DebugLabel.showDebugLabel(context);
+              return LoginPage();
+            }
           }
 
         );
