@@ -1,6 +1,6 @@
 
 import 'package:dio/dio.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter_app_study/common/net/result_data.dart';
 import 'package:flutter_app_study/common/net/code.dart';
 
