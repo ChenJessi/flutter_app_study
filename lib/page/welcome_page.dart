@@ -42,7 +42,7 @@ class _WelcomePageState extends State<WelComePage> {
     });
     Future.delayed(const Duration(seconds: 1, milliseconds: 500), () {
       setState(() {
-        text = "FlutterApp1";
+        text = "FlutterApp";
         fontSize = 40;
       });
     });
